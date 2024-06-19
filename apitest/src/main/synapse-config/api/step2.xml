@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<api context="/a" name="step2" xmlns="http://ws.apache.org/ns/synapse">
-    <resource methods="POST" uri-template="/b*">
+<api context="/api/training/" name="step2" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/v1.0*">
         <inSequence>
             <property name="number" expression="$url:number"/>
             <property name="id" expression="$url:id"/> 
