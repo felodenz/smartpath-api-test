@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<artifacts><artifact name="testapi" type="synapse/api" serverRole="EnterpriseServiceBus" groupId="apitests" version="1.0-SNAPSHOT"><file>api\testapi.xml</file></artifact><artifact name="step2" type="synapse/api" serverRole="EnterpriseServiceBus" groupId="apitests" version="1.0-SNAPSHOT"><file>api\step2.xml</file></artifact><artifact name="train" type="synapse/api" serverRole="EnterpriseServiceBus" groupId="apitests" version="1.0-SNAPSHOT"><file>api\train.xml</file></artifact></artifacts>

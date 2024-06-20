@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<api context="/train" name="train" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/v1.0*">
+        <inSequence> 
+            <!-- Define inflow mediation logic here -->
+            <property name="number" expression="$url:number" />
+            <property name="id" expression="$url:id" /> 
+            <property name="payload" expression="json-eval($.)" />
+            <script language="js">
+                <![CDATA[
+                    var number=mc.getProperty('number');
+                    var id=mc.getProperty('id');
+                    var payload=JSON.parse(mc.getProperty('payload'));
+                    var f=false;
+                    for(var i=0;i<payload.length;i++){
+                        if(id == payload[i].id){
+                            mc.setPayloadJSON(payload[i]);
+                            f=true;
+                            mc.setProperty('f',f);
+                            break;
+                        }
+                    }
+                ]]>
+            </script>
+            <filter source="$ctx:f" regex="true">
+                <then>
+                        <payloadFactory media-type="json">
+                            <format>{"name":"$1"}</format>    
+                            <args>
+                                <arg evaluator="json" expression="$.name"/>
+                            </args>
+                        </payloadFactory>
+                </then>
+                <else>
+                    <property name="HTTP_SC" value="404" scope="axis2"/>
+                    <payloadFactory media-type="json">
+                        <format>{"err":"NOTFOUND"}</format>
+                        <args/>
+                    </payloadFactory> 
+                </else>
+            </filter>            
+            <respond />
+        </inSequence>
+        <outSequence>
+            <!-- Define outflow mediation logic here -->
+        </outSequence>
+        <faultSequence>
+            <!-- Define error handling mediation logic here -->
+        </faultSequence>
+    </resource>
+</api>
